@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% block footer %}
+<body data-type="game">
+{% endblock %}
+{% block content %}
+    <script>
+        var game_id = {{ game_id }};
+        </script>
+    <link rel="stylesheet" href="/static/assets/css/amazeui.page.css"/>
+    <link rel="stylesheet" href="/static/assets/css/amazeui.chosen.css"/>
+    <script src="/static/assets/js/amazeui.chosen.min.js"></script>
+    <script src="/static/assets/js/amazeui.page.js"></script>
+        <div class="tpl-content-wrapper">
+            <div class="tpl-content-page-title">
+                {{ title }}版本综合报表
+            </div>
+            <ol class="am-breadcrumb">
+                <li><a href="{% url 'index' %}" class="am-icon-home">概览</a></li>
+                <li class="am-active">梦幻{{ title }}综合报表</li>
+            </ol>
+
+            <div class="tpl-portlet-components">
+                <div class="portlet-title">
+                    <div class="caption font-green bold">
+                         分渠道日报
+                    </div>
+                </div>
+                <div class="tpl-block">
+                    <div class="am-g">
+                        <div class="am-u-sm-12 am-u-md-3">
+                            <div class="am-form-group">
+                                <select data-am-selected="{btnSize: 'sm'}" id = 'change'>
+                                  <option value="20183" selected >2018-03</option>
+                                  <option value="20182">2018-02</option>
+                                  <option value="20181">2018-01</option>
+                                  <option value="all">全部</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="am-g">
+                        <div class="am-u-sm-12">
+                            <form class="am-form">
+                                <table   class="am-table am-table-striped am-table-hover  table-main" id="example" >
+                                        <thead>
+                                              <tr>
+                                                  {% ifequal type 1 %}
+                                                  <th>日期</th>
+                                                  <th>平台</th>
+                                                  <th>新增</th>
+                                                  <th>活跃</th>
+                                                  <th>流水</th>
+                                                  <th>付费人数</th>
+                                                  <th>付费率</th>
+                                                  <th>arpu</th>
+                                                  <th>arppu</th>
+                                                  <th>2留</th>
+                                                  <th>3留</th>
+                                                  <th>7留</th>
+                                                  <th>14留</th>
+                                                  <th>月留</th>
+                                                  <th>LTV2</th>
+                                                  <th>LTV3</th>
+                                                  <th>LTV7</th>
+                                                  <th>LTV14</th>
+                                                  <th>LTV30</th>
+                                                  {% else %}
+                                                  <th>日期</th>
+                                                  <th>平台</th>
+                                                  <th>活跃</th>
+                                                  <th>登入次数</th>
+                                                  <th>新增用户</th>
+                                                  <th>日流水</th>
+                                                  <th>新玩家付费</th>
+                                                  <th>首冲金额</th>
+                                                  <th>付费人数</th>
+                                                  <th>新玩家付费人数</th>
+                                                  <th>首冲金额</th>
+                                                  <th>充值次数</th>
+                                                  <th>新用户充值次数</th>
+                                                  <th>arppu</th>
+                                                  <th>arpu</th>
+                                                  <th>新用户平均付费</th>
+                                                  <th>付费率</th>
+                                                  {% endifequal %}
+                                              </tr>
+                                        </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+
+
+{% endblock content %}
