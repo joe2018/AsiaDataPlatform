@@ -30,95 +30,73 @@
                 </div>
             </div>
 
+
             <div class="row">
-                <div class="am-u-lg-2 am-u-md-6 am-u-sm-12">
-                    <div class="dashboard-stat green">
-                        <div class="visual">
-                            <i class="am-icon-dollar"></i>
+                <div class="am-u-md-12 am-u-sm-12 row-mb">
+                    <div class="tpl-portlet">
+                        <div class="tpl-portlet-title">
+                            <div class="tpl-caption font-green ">
+                                <span>主要数据指标</span>
+                            </div>
                         </div>
-                        <div class="details">
-                            <div id='m_money' class="number">  </div>
-                            <div class="desc"> 总流水 </div>
-                        </div>
-                        <a class="more" href="#"> 查看更多
-                            <i class="m-icon-swapright m-icon-white"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="am-u-lg-2 am-u-md-6 am-u-sm-12">
-                    <div class="dashboard-stat fuchsia">
-                        <div class="visual">
-                            <i class="am-icon-area-chart"></i>
-                        </div>
-                        <div class="details">
-                            <div id = 'rate' class="number">  </div>
-                            <div class="desc"> 完成率 </div>
-                        </div>
-                        <a class="more" href="#"> 查看更多
-                            <i class="m-icon-swapright m-icon-white"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="am-u-lg-2 am-u-md-6 am-u-sm-12">
-                    <div class="dashboard-stat fuchsia2">
-                        <div class="visual">
-                            <i class="am-icon-bar-chart"></i>
-                        </div>
-                        <div class="details">
-                            <div id = 'all_dnu' class="number"> % </div>
-                            <div class="desc"> 新增用户 </div>
-                        </div>
-                        <a class="more" href="#"> 查看更多
-                            <i class="m-icon-swapright m-icon-white"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="am-u-lg-2 am-u-md-6 am-u-sm-12">
-                    <div class="dashboard-stat red">
-                        <div class="visual">
-                            <i class="am-icon-user"></i>
-                        </div>
-                        <div class="details">
-                            <div id = 'Avg_payrate' class="number">  </div>
-                            <div class="desc"> 付费率 </div>
-                        </div>
-                        <a class="more" href="#"> 查看更多
-                            <i class="m-icon-swapright m-icon-white"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="am-u-lg-2 am-u-md-6 am-u-sm-12">
-                    <div class="dashboard-stat blue">
-                        <div class="visual">
-                            <i class="am-icon-line-chart"></i>
-                        </div>
-                        <div class="details">
-                            <div id = 'ltv'class="number">  </div>
-                            <div class="desc"> 用户终身价值</div>
-                        </div>
-                        <a class="more" href="#"> 查看更多
-                    <i class="m-icon-swapright m-icon-white"></i>
-                </a>
-                    </div>
-                </div>
-                <div class="am-u-lg-2 am-u-md-6 am-u-sm-12">
-                    <div class="dashboard-stat purple">
-                        <div class="visual">
-                            <i class="am-icon-usd"></i>
-                        </div>
-                        <div class="details">
-                            <div class="number"> 0 </div>
-                            <div class="desc"> 单用户成本 </div>
-                        </div>
-                        <a class="more" href="#"> 查看更多
-                    <i class="m-icon-swapright m-icon-white"></i>
-                </a>
-                    </div>
-                </div>
+                        <div class="am-tabs tpl-index-tabs" data-am-tabs>
+                            <ul class="am-tabs-nav am-nav am-nav-tabs">
+                                <li class="tz">
+                                    <div class="actions">
+                                        <ul class="actions-btn">
+                                            <li class="red">本月</li>
+                                            <li class="purple">上月</li>
+                                            <li class="blue">全部</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
 
+                        </div>
+                        <div class="number-stats">
+                                <ul>
+                                    <li>
+                                        <div class="stat-number am-fl am-u-md-2">
+                                            <div class="title am-text-left"> 总流水 </div>
+                                            <div id='m_money' class="number am-text-middle am-text-warning">  </div>
+                                        </div>
+                                        <div class="stat-number am-fr am-u-md-2">
+                                            <div class="title am-text-left"> 单用户成本 </div>
+                                            <div id='more' class="number am-text-middle am-text-warning">  </div>
+                                        </div>
+                                        <div class="stat-number am-fr am-u-md-2">
+                                            <div class="title am-text-left"> 用户终身价值 </div>
+                                            <div id='ltv' class="number am-text-middle am-text-warning">  </div>
+                                        </div>
+                                        <div class="stat-number am-fr am-u-md-2">
+                                            <div class="title am-text-left"> 付费率 </div>
+                                            <div id='Avg_payrate' class="number am-text-middle am-text-warning">  </div>
+                                        </div>
+                                        <div class="stat-number am-fr am-u-md-2">
+                                            <div class="title am-text-left"> 新增用户 </div>
+                                            <div id='all_dnu' class="number am-text-middle am-text-warning">  </div>
+                                        </div>
+                                        <div class="stat-number am-fr am-u-md-2">
+                                            <div class="title am-text-left"> 完成率 </div>
+                                            <div id='rate' class="number am-text-middle am-text-warning">  </div>
+                                        </div>
 
-
+                                    </li>
+                                        <div class="stat-number am-fr am-u-md-2">
+                                            <div class="title am-text-left"> 完成率 </div>
+                                            <div id='rate' class="number am-text-middle am-text-warning"> 1231 </div>
+                                        </div>
+                                    <li>
+                                    </li>
+                                </ul>
+                            </div>
+                    </div>
+                </div>
             </div>
+
+
+
+
 
             <div class="row">
                 <div class="am-u-md-6 am-u-sm-12 row-mb">

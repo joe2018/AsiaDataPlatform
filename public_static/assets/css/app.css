@@ -940,6 +940,11 @@ ul.tpl-dropdown-content li>a.tpl-dropdown-content-message:last-child {
     line-height: 18px;
 }
 
+.tz{
+    margin-top: -5px;
+    margin-right: 20px;
+    margin-left: 20px;
+}
 .font-green {
     color: #32c5d2!important;
 }
@@ -1655,6 +1660,8 @@ ul.tpl-dropdown-content li>a.tpl-dropdown-content-message:last-child {
     float: left;
 }
 
+
+
 .tpl-edit-content-btn {
     width: 100%;
 }
@@ -1690,6 +1697,15 @@ ul.tpl-dropdown-content li>a.tpl-dropdown-content-message:last-child {
 .am-form-field:focus {
     -webkit-box-shadow: none;
     box-shadow: none;
+}
+
+.datetime {
+    width: 135px;
+    font-size: 13px;
+    padding-left: 1px;
+    margin-right: 5px;
+    margin-bottom: 6px;
+">
 }
 
 .tpl-form-line-form input[type=number],
