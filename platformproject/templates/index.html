@@ -31,34 +31,35 @@
             </div>
 
 
-            <div class="row">
-                <div class="am-u-md-12 am-u-sm-12 row-mb">
                     <div class="tpl-portlet">
-						<div class="tpl-portlet-title ">
-							<div class="tpl-caption font-green ">
-								<span id='nowmon' ></span>
-								<span>主要数据指标</span>
-							</div>
-								<div class="am-g div-float-right">
-									<div class="am-u-sm-12 am-u-md-3">
-										<div class="am-form-group">
-											<select data-am-selected="{btnSize: 'sm'}" id = 'change'>
-											{% for k,v in content.items %}
-											  <option value={{ v }} >{{ k }}</option>
-											  {% endfor %}
-											</select>
-										</div>
-									</div>
-								</div>
-							<div class = 'div-float-right'>
-								{% for k,v in content.items %}
-								
-								{% endfor %}
-							</div>
-						</div>
-					
+            <div class="tpl-portlet-components">
+                <div class="portlet-title">
+                    <div class="caption font-green bold">
+                        <span id='nowmon' ></span>
+                        <span>主要数据指标</span>
+                    </div>
+                    <div class="am-g ">
+                        <div class="am-u-sm-12 am-u-md-3 div-float-right">
+                            <div class="am-form-group">
+                                <select data-am-selected="{btnSize: 'sm'}" id = 'change' >
+                                    {% for k,v in content.items %}
+                                        <option value={{ v }} >{{ k }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="am-g ">
+                        <div class="am-u-sm-12 am-u-md-3">
+                            <p><input type="text" class="am-form-field" placeholder="今天之前的日期被禁用" id="my-start-2"/></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tpl-block">
+
+                    <div class="am-g ">
                         <div class="number-stats">
-                                <ul>
+                            <ul>
                                     <li>
                                         <div class="stat-number am-fl am-u-md-2">
                                             <div class="title am-text-left"> 总流水 </div>
@@ -93,12 +94,10 @@
                                     <li>
                                     </li>
                                 </ul>
-                            </div>
-						</div>
-                    
+                        </div>
+                    </div>
                 </div>
             </div>
-
 
 
 

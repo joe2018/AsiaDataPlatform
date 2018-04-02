@@ -58,10 +58,10 @@ def select(*args):
     Month = int(datetime.datetime.now().strftime("%m"))
     for i in range(b_year,year+1):
         if b_year<year:
-            for i in range(1,13):
+            for i in range(12,0,-1):
                 content['%s-%s' % (b_year,i)] = '%s%s' % (b_year,i)
         if b_year==year:
-            for i in range(1,Month+1):
+            for i in range(Month,0,-1):
                 content['%s-%s' % (b_year,i)] = '%s%s' % (b_year,i)
         b_year +=1
 
@@ -71,6 +71,7 @@ def m_money(request):
     if request.method == 'POST':
         if 'cha_time' in request.POST:
             chg = request.POST['cha_time']
+            print(chg)
             cha_time_list = range_time(chg)
         else:
             cha_time_list = range_time()

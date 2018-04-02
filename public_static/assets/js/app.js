@@ -58,6 +58,11 @@ var pageData = {
 		var Year = myDate.getFullYear();
 		var month = myDate.getMonth()+1; 
 		change_month(String(Year)+String(month))
+        $('#change').on('change', function () {
+            month = $('#change').val();
+            change_month(month);
+        })
+        $('#my-start-2').datepicker({format: 'yyyy-mm'});
         var myScroll = new IScroll('#wrapper', {
             scrollbars: true,
             mouseWheel: true,
