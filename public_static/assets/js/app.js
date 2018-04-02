@@ -54,8 +54,10 @@ var pageData = {
     // 首页
     // ===============================================
     'index': function indexData() {
-
-
+		var myDate = new Date();
+		var Year = myDate.getFullYear();
+		var month = myDate.getMonth()+1; 
+		change_month(String(Year)+String(month))
         var myScroll = new IScroll('#wrapper', {
             scrollbars: true,
             mouseWheel: true,
@@ -82,15 +84,19 @@ var pageData = {
             preventDefault: false,
             fadeScrollbars: true
         });
-        $.post("/m_money/",{'cha_time':'20183'},function(ret) {
-                    $('#m_money').html(ret.all_money );
-                    $('#all_dnu').html(ret.all_dnu );
-                    $('#Avg_payrate').html(ret.Avg_payrate+'%' );
-                    $('#rate').html(ret.rate+'%' );
-                    $('#ltv').html(ret.ltv );
+		function change_month(month){
+			$.post("/m_money/",{'cha_time':month},function(ret) {
+						$('#m_money').html(ret.all_money );
+						$('#all_dnu').html(ret.all_dnu );
+						$('#Avg_payrate').html(ret.Avg_payrate+'%' );
+						$('#rate').html(ret.rate+'%' );
+						$('#ltv').html(ret.ltv );
+						$('#nowmon').html(ret.mon+'月' );
 
-                });
+					});
+		}
 
+		
         // document.addEventListener('touchmove', function(e) { e.preventDefault(); }, false);
 
         // ==========================

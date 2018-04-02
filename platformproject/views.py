@@ -10,19 +10,24 @@ from calendar import monthrange #获取月份的天数
 # Create your views here.
 
 def index(request):
-    return render(request, 'index.html')
+    content = select()
+    return render(request, 'index.html',{'content':content})
 
 def rofth_data(request):
-    return render(request, 'game_data.html',{'game_id':1,'title': '梦幻之翼泰国','type':1})
+    content = select()
+    return render(request, 'game_data.html',{'game_id':1,'title': '梦幻之翼泰国','type':1,'content':content})
 
 def rofid_data(request):
-    return render(request, 'game_data.html',{'game_id':2,'title': '梦幻之翼印尼','type':1})
+    content = select()
+    return render(request, 'game_data.html',{'game_id':2,'title': '梦幻之翼印尼','type':1,'content':content})
 
 def e3kid_data(request):
-    return render(request, 'game_data.html',{'game_id':3,'title': '乱轰三国印尼','type':2})
+    content = select()
+    return render(request, 'game_data.html',{'game_id':3,'title': '乱轰三国印尼','type':2,'content':content})
 
 def range_time(*args):
     cha_time_list = []
+    print(args)
     if args:
         if str(args[0]) == 'all':
             date_from = datetime.datetime(2018, 1, 1, 0, 0,tzinfo=timezone.utc)
@@ -46,6 +51,21 @@ def range_time(*args):
     cha_time_list.append(date_to)
     return cha_time_list
 
+def select(*args):
+    content = {}
+    b_year = 2018
+    year = int(datetime.datetime.now().strftime("%Y"))
+    Month = int(datetime.datetime.now().strftime("%m"))
+    for i in range(b_year,year+1):
+        if b_year<year:
+            for i in range(1,13):
+                content['%s-%s' % (b_year,i)] = '%s%s' % (b_year,i)
+        if b_year==year:
+            for i in range(1,Month+1):
+                content['%s-%s' % (b_year,i)] = '%s%s' % (b_year,i)
+        b_year +=1
+
+    return content
 
 def m_money(request):
     if request.method == 'POST':
@@ -53,7 +73,7 @@ def m_money(request):
             chg = request.POST['cha_time']
             cha_time_list = range_time(chg)
         else:
-            cha_time_list = range_time('20183')
+            cha_time_list = range_time()
         date_from = cha_time_list[0]
         date_to = cha_time_list[1]
         rofmoney_th = rof_day_data.objects.filter(operationtime__range=(date_from, date_to)).aggregate(Sum('dayrun'),Sum('newaddaccount'),Avg('payrate'))
@@ -70,7 +90,7 @@ def m_money(request):
         a_money = rof_th['dayrun__sum'] + rof_id['dayrun__sum'] + e3k_id['dayrun__sum']
         a_dnu = rof_th['newaddaccount__sum'] + rof_id['newaddaccount__sum'] + e3k_id['dnu__sum']
         ltv = a_money/a_dnu
-        return JsonResponse({'all_money': '%.2f' % all_money,'all_dnu':all_dnu,'Avg_payrate': '%.2f' % Avg_payrate,'rate': '%.2f' % rate,'ltv': '%.2f' % ltv} )
+        return JsonResponse({'all_money': '%.2f' % all_money,'all_dnu':all_dnu,'Avg_payrate': '%.2f' % Avg_payrate,'rate': '%.2f' % rate,'ltv': '%.2f' % ltv,'mon':int(date_to.strftime('%m'))} )
 
 
 def game_data(request):

@@ -22,13 +22,17 @@
     <link rel="stylesheet" href="/static/assets/css/app.css">
     <link rel="stylesheet" href="/static/assets/css/fullcalendar.min.css" />
     <link rel="stylesheet" href="/static/assets/css/fullcalendar.print.css" media='print' />
+	<link rel="stylesheet" href="/static/assets/date-picker/skin/WdatePicker.css" />
     <script src="/static/assets/js/jquery.min.js"></script>
     <script src="/static/assets/js/amazeui.min.js"></script>
+	<script src="/static/assets/date-picker/WdatePicker.js?ver=20170101" type="text/javascript"></script>
+	<script src="/static/assets/date-picker/lang/zh-cn.js" charset="gb2312"></script>
+	<link rel="stylesheet" type="text/css" href="/static/assets/date-picker/skin/whyGreen/datepicker.css" charset="gb2312">
+	<link rel="stylesheet" href="/static/assets/css/fullcalendar.min.css" />
 </head>
 
 {% block footer %}
 {% endblock %}
-<script src="/static/assets/js/theme.js"></script>
 <script>
     $.ajaxSetup({
         data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
@@ -154,4 +158,6 @@ function getCookie(name) {
         <script src="/static/assets/js/amazeui.datatables.min.js"></script>
         <script src="/static/assets/js/dataTables.responsive.min.js"></script>
         <script src="/static/assets/js/app.js"></script>
+
+
 </html>

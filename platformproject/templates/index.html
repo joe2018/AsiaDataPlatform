@@ -34,25 +34,29 @@
             <div class="row">
                 <div class="am-u-md-12 am-u-sm-12 row-mb">
                     <div class="tpl-portlet">
-                        <div class="tpl-portlet-title">
-                            <div class="tpl-caption font-green ">
-                                <span>主要数据指标</span>
-                            </div>
-                        </div>
-                        <div class="am-tabs tpl-index-tabs" data-am-tabs>
-                            <ul class="am-tabs-nav am-nav am-nav-tabs">
-                                <li class="tz">
-                                    <div class="actions">
-                                        <ul class="actions-btn">
-                                            <li class="red">本月</li>
-                                            <li class="purple">上月</li>
-                                            <li class="blue">全部</li>
-                                        </ul>
-                                    </div>
-                                </li>
-                            </ul>
-
-                        </div>
+						<div class="tpl-portlet-title ">
+							<div class="tpl-caption font-green ">
+								<span id='nowmon' ></span>
+								<span>主要数据指标</span>
+							</div>
+								<div class="am-g div-float-right">
+									<div class="am-u-sm-12 am-u-md-3">
+										<div class="am-form-group">
+											<select data-am-selected="{btnSize: 'sm'}" id = 'change'>
+											{% for k,v in content.items %}
+											  <option value={{ v }} >{{ k }}</option>
+											  {% endfor %}
+											</select>
+										</div>
+									</div>
+								</div>
+							<div class = 'div-float-right'>
+								{% for k,v in content.items %}
+								
+								{% endfor %}
+							</div>
+						</div>
+					
                         <div class="number-stats">
                                 <ul>
                                     <li>
@@ -90,7 +94,8 @@
                                     </li>
                                 </ul>
                             </div>
-                    </div>
+						</div>
+                    
                 </div>
             </div>
 
@@ -789,7 +794,6 @@
                 </div>
             </div>
         </div>
-
 {% endblock content %}
 
 

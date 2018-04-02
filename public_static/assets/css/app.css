@@ -6,6 +6,7 @@ body {
     overflow: inherit;
 }
 
+
 ul,
 li {
     margin: 0;
@@ -155,6 +156,9 @@ ul.am-dropdown-content>li>a {
     color: #7FB0DA;
 }
 
+.div-float-right{
+	float: right;
+	}
 .tpl-header-list-user-nick {
     color: #7FB0DA;
 }
