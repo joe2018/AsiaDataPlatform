@@ -30,10 +30,9 @@
                         <div class="am-u-sm-12 am-u-md-3">
                             <div class="am-form-group">
                                 <select data-am-selected="{btnSize: 'sm'}" id = 'change'>
-								  <option value="20184" selected >2018-04</option>
-                                  <option value="20183" >2018-03</option>
-                                  <option value="20182">2018-02</option>
-                                  <option value="20181">2018-01</option>
+											{% for k,v in content.items %}
+											  <option value={{ v }} >{{ k }}</option>
+											  {% endfor %}
                                   <option value="all">全部</option>
                                 </select>
                             </div>
