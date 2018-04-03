@@ -6,17 +6,11 @@
 
         <div class="tpl-content-wrapper">
             <!-- 页头信息  -->
-            <!--
-            <div class="tpl-content-page-title">
-                现在时间
-            </div>
-            -->
             <ol class="am-breadcrumb">
                 <li><a href="{% url 'index' %}" class="am-icon-home">概览</a></li>
                 <li class="am-active">东南亚综合报表</li>
             </ol>
             <!-- 信息提示框  -->
-
             <div class="tpl-content-scope">
                 <div class="note note-info">
                     <!--
@@ -29,77 +23,62 @@
                     </p>
                 </div>
             </div>
+            <div class="am-g div-table">
+                <div class="am-u-sm-12 am-u-sm-centered">
+                    <div class="am-g div-padding">
+                        <div class="am-u-sm-3 font-green bold">
+                            <i class="am-icon-bar-chart am-icon-fw"></i>
+                            <span ><span id='nowmon' ></span>主要数据指标</span>
+                        </div>
+                        <div class="am-u-sm-9">
+                            <div class="am-g">
+                                <div class="am-u-sm-6 am-u-sm-offset-10">
+                                    <div class="am-u-sm-9 am-input-group">
+                                        <div class="search-control" >
+                                            <input type="text" id="change_time" class="Wdate" onclick="datechange()" />
 
-
-            <div class="tpl-portlet-components">
-                <div class="portlet-title">
-                    <div class="caption font-green bold">
-                        <span id='nowmon' ></span>
-                        <span>主要数据指标</span>
-                    </div>
-                    <div class="am-g ">
-                        <div class="am-u-sm-12 am-u-md-3 div-float-right">
-                            <div class="am-form-group">
-                                <select data-am-selected="{btnSize: 'sm'}" id = 'change' >
-                                    {% for k,v in content.items %}
-                                        <option value={{ v }} >{{ k }}</option>
-                                    {% endfor %}
-                                </select>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="am-g ">
-                        <div class="am-u-sm-12 am-u-md-3">
-                            <p><input type="text" class="am-form-field" placeholder="今天之前的日期被禁用" id="my-start-2"/></p>
-                        </div>
-                    </div>
                 </div>
-                <div class="tpl-block">
-
-                    <div class="am-g ">
+                <div class="am-u-sm-12 am-u-sm-centered div-border">
+                    <div class="am-g">
                         <div class="number-stats">
                             <ul>
-                                    <li>
-                                        <div class="stat-number am-fl am-u-md-2">
-                                            <div class="title am-text-left"> 总流水 </div>
-                                            <div id='m_money' class="number am-text-middle am-text-warning">  </div>
-                                        </div>
-                                        <div class="stat-number am-fr am-u-md-2">
-                                            <div class="title am-text-left"> 单用户成本 </div>
-                                            <div id='more' class="number am-text-middle am-text-warning">  </div>
-                                        </div>
-                                        <div class="stat-number am-fr am-u-md-2">
-                                            <div class="title am-text-left"> 用户终身价值 </div>
-                                            <div id='ltv' class="number am-text-middle am-text-warning">  </div>
-                                        </div>
-                                        <div class="stat-number am-fr am-u-md-2">
-                                            <div class="title am-text-left"> 付费率 </div>
-                                            <div id='Avg_payrate' class="number am-text-middle am-text-warning">  </div>
-                                        </div>
-                                        <div class="stat-number am-fr am-u-md-2">
-                                            <div class="title am-text-left"> 新增用户 </div>
-                                            <div id='all_dnu' class="number am-text-middle am-text-warning">  </div>
-                                        </div>
-                                        <div class="stat-number am-fr am-u-md-2">
-                                            <div class="title am-text-left"> 完成率 </div>
-                                            <div id='rate' class="number am-text-middle am-text-warning">  </div>
-                                        </div>
-
-                                    </li>
-                                        <div class="stat-number am-fr am-u-md-2">
-                                            <div class="title am-text-left"> 完成率 </div>
-                                            <div id='rate' class="number am-text-middle am-text-warning"> 1231 </div>
-                                        </div>
-                                    <li>
-                                    </li>
-                                </ul>
+                                <li>
+                                    <div class="stat-number am-fl am-u-md-2">
+                                        <div class="title am-text-left"> 总流水 </div>
+                                        <div id='m_money' class="number am-text-middle am-text-warning">  </div>
+                                    </div>
+                                    <div class="stat-number am-fr am-u-md-2">
+                                        <div class="title am-text-left"> 单用户成本 </div>
+                                        <div id='more' class="number am-text-middle am-text-warning">  </div>
+                                    </div>
+                                    <div class="stat-number am-fr am-u-md-2">
+                                        <div class="title am-text-left"> 用户终身价值 </div>
+                                        <div id='ltv' class="number am-text-middle am-text-warning">  </div>
+                                    </div>
+                                    <div class="stat-number am-fr am-u-md-2">
+                                        <div class="title am-text-left"> 付费率 </div>
+                                        <div id='Avg_payrate' class="number am-text-middle am-text-warning">  </div>
+                                    </div>
+                                    <div class="stat-number am-fr am-u-md-2">
+                                        <div class="title am-text-left"> 新增用户 </div>
+                                        <div id='all_dnu' class="number am-text-middle am-text-warning">  </div>
+                                    </div>
+                                    <div class="stat-number am-fr am-u-md-2">
+                                        <div class="title am-text-left"> 完成率 </div>
+                                        <div id='rate' class="number am-text-middle am-text-warning">  </div>
+                                    </div>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
-
-
-
 
             <div class="row">
                 <div class="am-u-md-6 am-u-sm-12 row-mb">
@@ -792,6 +771,7 @@
                 </div>
             </div>
         </div>
+
 {% endblock content %}
 
 

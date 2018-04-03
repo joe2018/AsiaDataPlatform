@@ -43,8 +43,8 @@
                             <form class="am-form">
                                 <table   class="am-table am-table-striped am-table-hover  table-main" id="example" >
                                         <thead>
+                                            {% ifequal type 1 %}
                                               <tr>
-                                                  {% ifequal type 1 %}
                                                   <th>日期</th>
                                                   <th>平台</th>
                                                   <th>新增</th>
@@ -64,7 +64,9 @@
                                                   <th>LTV7</th>
                                                   <th>LTV14</th>
                                                   <th>LTV30</th>
-                                                  {% else %}
+                                              </tr>
+                                            {% else %}
+                                                <tr>
                                                   <th>日期</th>
                                                   <th>平台</th>
                                                   <th>活跃</th>
@@ -82,8 +84,8 @@
                                                   <th>arpu</th>
                                                   <th>新用户平均付费</th>
                                                   <th>付费率</th>
+                                                </tr>
                                                   {% endifequal %}
-                                              </tr>
                                         </thead>
                                     <tbody>
                                     </tbody>

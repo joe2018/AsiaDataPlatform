@@ -96,7 +96,7 @@ def m_money(request):
 
 def game_data(request):
     if request.method == 'POST':
-        data =[]
+        mydata =[]
         if 'cha_time' in request.POST:
             chg = request.POST['cha_time']
             cha_time_list = range_time(chg)
@@ -112,6 +112,8 @@ def game_data(request):
             mon_data = rofid_day_data.objects.filter(operationtime__range=(date_from, date_to))
         elif int(gameid) == 3:
             mon_data = e3kid_day_data.objects.filter(operationtime__range=(date_from, date_to))
+            e3k_id = rof_day_data.objects.filter(operationtime__range=(date_from, date_to)).aggregate(
+                Sum('loginaccount'), Sum('dnu'), Sum('dayrun'), Avg('dnupay'), Sum('f_pay'),Sum('payrolenum'), Sum('f_paynum'), Avg('paynum'), Avg('arppu'), Avg('arpu'),Avg('AVEdnupay'),Avg('payrate'))
             for i in mon_data:
                 tump = {}
                 tump['operationtime'] = i.operationtime.strftime("%Y/%m/%d")
@@ -131,8 +133,10 @@ def game_data(request):
                 tump['arpu'] = '%.2f' % float(i.arpu)
                 tump['AVEdnupay'] = str('%.2f' % (float(i.AVEdnupay)*100)) + "%"
                 tump['payrate'] = str('%.2f' % (float(i.payrate)*100)) + "%"
-                data.append(tump)
-            return JsonResponse({'data': data})
+                mydata.append(tump)
+            return JsonResponse({'mydata': mydata,'e3k_id':e3k_id})
+        rof_thid = rof_day_data.objects.filter(operationtime__range=(date_from, date_to)).aggregate(
+            Sum('dayrun'), Sum('newaddaccount'), Avg('payrate'), Avg('loginarpu'), Avg('payarpu'),Sum('payrolenum'), Avg('tworemain'), Avg('threeremain'), Avg('sevenremain'), Avg('fourteenremain'),Avg('monthremain'),Avg('twoLTV'), Avg('threeLTV'), Avg('sevenLTV'), Avg('fourteenLTV'), Avg('monthLTV'))
         for i in mon_data:
             tump = {}
             tump['operationtime'] = i.operationtime.strftime("%Y/%m/%d")
@@ -154,6 +158,6 @@ def game_data(request):
             tump['sevenLTV'] = '%.2f' % float(i.sevenLTV)
             tump['fourteenLTV'] = '%.2f' % float(i.fourteenLTV)
             tump['monthLTV'] = '%.2f' % float(i.monthLTV)
-            data.append(tump)
-        return JsonResponse({'data': data})
+            mydata.append(tump)
+        return JsonResponse({'data': mydata,'rof_thid':rof_thid})
 

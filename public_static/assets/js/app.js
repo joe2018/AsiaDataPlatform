@@ -1,4 +1,5 @@
 $(function() {
+
         var dataType = $('body').attr('data-type');
             for (key in pageData) {
                 if (key == dataType) {
@@ -58,11 +59,15 @@ var pageData = {
 		var Year = myDate.getFullYear();
 		var month = myDate.getMonth()+1; 
 		change_month(String(Year)+String(month))
+        document.getElementById("change_time").value = String(Year)+'年'+String(month)+'日';
         $('#change').on('change', function () {
             month = $('#change').val();
             change_month(month);
         })
-        $('#my-start-2').datepicker({format: 'yyyy-mm'});
+        $('#5421').on('changed', function () {
+            month = $('#5421').val();
+            change_month(month);
+        })
         var myScroll = new IScroll('#wrapper', {
             scrollbars: true,
             mouseWheel: true,
@@ -89,17 +94,7 @@ var pageData = {
             preventDefault: false,
             fadeScrollbars: true
         });
-		function change_month(month){
-			$.post("/m_money/",{'cha_time':month},function(ret) {
-						$('#m_money').html(ret.all_money );
-						$('#all_dnu').html(ret.all_dnu );
-						$('#Avg_payrate').html(ret.Avg_payrate+'%' );
-						$('#rate').html(ret.rate+'%' );
-						$('#ltv').html(ret.ltv );
-						$('#nowmon').html(ret.mon+'月' );
 
-					});
-		}
 
 		
         // document.addEventListener('touchmove', function(e) { e.preventDefault(); }, false);
@@ -511,4 +506,28 @@ function getQueryString() {
     }
   }
   return args;
+}
+
+function datechange() {
+    date_option = {isShowClear:false,readOnly:true,skin:'whyGreen',dateFmt:'yyyy年M月',minDate:'2018-1',maxDate:'%y-%M',onpicked:pickedFunc}
+    WdatePicker(date_option)
+    return WdatePicker
+}
+
+function pickedFunc() {
+    c_year = $dp.cal.getP('y');
+    c_month = $dp.cal.getP('M');
+    change_month(c_year+c_month)
+
+}
+
+function change_month(month){
+    $.post("/m_money/",{'cha_time':month},function(ret) {
+        $('#m_money').html(ret.all_money );
+        $('#all_dnu').html(ret.all_dnu );
+        $('#Avg_payrate').html(ret.Avg_payrate+'%' );
+        $('#rate').html(ret.rate+'%' );
+        $('#ltv').html(ret.ltv );
+        $('#nowmon').html(ret.mon+'月' );
+    });
 }
