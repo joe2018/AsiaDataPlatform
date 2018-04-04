@@ -10,73 +10,45 @@ from calendar import monthrange #获取月份的天数
 # Create your views here.
 
 def index(request):
-    content = select()
-    return render(request, 'index.html',{'content':content})
+    return render(request, 'index.html')
 
 def rofth_data(request):
-    content = select()
-    return render(request, 'game_data.html',{'game_id':1,'title': '梦幻之翼泰国','type':1,'content':content})
+
+    return render(request, 'game_data.html',{'game_id':1,'title': '梦幻之翼泰国','type':1})
 
 def rofid_data(request):
-    content = select()
-    return render(request, 'game_data.html',{'game_id':2,'title': '梦幻之翼印尼','type':1,'content':content})
+
+    return render(request, 'game_data.html',{'game_id':2,'title': '梦幻之翼印尼','type':1})
 
 def e3kid_data(request):
-    content = select()
-    return render(request, 'game_data.html',{'game_id':3,'title': '乱轰三国印尼','type':2,'content':content})
+    chg = request.POST['star_time']
+    times = datetime.datetime.strptime(chg, "%Y-%m-%d")
+    print(times)
+
+    return render(request, 'game_data.html',{'game_id':3,'title': '乱轰三国印尼','type':2})
 
 def range_time(*args):
     cha_time_list = []
-    print(args)
-    if args:
-        if str(args[0]) == 'all':
-            date_from = datetime.datetime(2018, 1, 1, 0, 0,tzinfo=timezone.utc)
-            year = int(datetime.datetime.now().strftime("%Y"))
-            Month = int(datetime.datetime.now().strftime("%m"))
-            daynub = monthrange(year, Month)[1]
-            date_to = datetime.datetime(year, Month, daynub, 0, 0, tzinfo=timezone.utc)
-        else:
-            year = int(args[0][:4])
-            Month = int(args[0][4:])
-            daynub = monthrange(year, Month)[1]
-            date_from = datetime.datetime(year, Month, 1, 0, 0,tzinfo=timezone.utc)
-            date_to = datetime.datetime(year, Month, daynub, 0, 0,tzinfo=timezone.utc)
-    else:
-        year = int(datetime.datetime.now().strftime("%Y"))
-        Month = int(datetime.datetime.now().strftime("%m"))
-        daynub = monthrange(year, Month)[1]
-        date_from = datetime.datetime(year, Month, 1, 0, 0, tzinfo=timezone.utc)
-        date_to = datetime.datetime(year, Month, daynub, 0, 0, tzinfo=timezone.utc)
+    year = int(datetime.datetime.now().strftime("%Y"))
+    Month = int(datetime.datetime.now().strftime("%m"))
+    daynub = monthrange(year, Month)[1]
+    date_from = datetime.datetime(year, Month, 1, 0, 0, tzinfo=timezone.utc)
+    date_to = datetime.datetime(year, Month, daynub, 0, 0, tzinfo=timezone.utc)
     cha_time_list.append(date_from)
     cha_time_list.append(date_to)
     return cha_time_list
-
-def select(*args):
-    content = {}
-    b_year = 2018
-    year = int(datetime.datetime.now().strftime("%Y"))
-    Month = int(datetime.datetime.now().strftime("%m"))
-    for i in range(b_year,year+1):
-        if b_year<year:
-            for i in range(12,0,-1):
-                content['%s-%s' % (b_year,i)] = '%s%s' % (b_year,i)
-        if b_year==year:
-            for i in range(Month,0,-1):
-                content['%s-%s' % (b_year,i)] = '%s%s' % (b_year,i)
-        b_year +=1
-
-    return content
 
 def m_money(request):
     if request.method == 'POST':
         if 'cha_time' in request.POST:
             chg = request.POST['cha_time']
-            print(chg)
-            cha_time_list = range_time(chg)
+            date_from = datetime.datetime(int(chg[:4]), int(chg[4:]), 1, 0, 0, tzinfo=timezone.utc)
+            daynub = monthrange(int(chg[:4]), int(chg[4:]))[1]
+            date_to = datetime.datetime(int(chg[:4]), int(chg[4:]), daynub, 0, 0, tzinfo=timezone.utc)
         else:
             cha_time_list = range_time()
-        date_from = cha_time_list[0]
-        date_to = cha_time_list[1]
+            date_from = cha_time_list[0]
+            date_to = cha_time_list[1]
         rofmoney_th = rof_day_data.objects.filter(operationtime__range=(date_from, date_to)).aggregate(Sum('dayrun'),Sum('newaddaccount'),Avg('payrate'))
         rofmoney_id = rofid_day_data.objects.filter(operationtime__range=(date_from, date_to)).aggregate(Sum('dayrun'),Sum('newaddaccount'),Avg('payrate'))
         e3kmoney_id = e3kid_day_data.objects.filter(operationtime__range=(date_from, date_to)).aggregate(Sum('dayrun'),Sum('dnu'),Avg('payrate'))
@@ -96,24 +68,56 @@ def m_money(request):
 
 def game_data(request):
     if request.method == 'POST':
+        print(request.POST)
         mydata =[]
-        if 'cha_time' in request.POST:
-            chg = request.POST['cha_time']
-            cha_time_list = range_time(chg)
+        if 'star_time' and  'end_time' in request.POST:
+            star_time = request.POST['star_time']
+            end_time = request.POST['end_time']
+            date_from = datetime.datetime.strptime(star_time, "%Y-%m-%d").replace(tzinfo=timezone.utc)
+            date_to = datetime.datetime.strptime(end_time, "%Y-%m-%d").replace(tzinfo=timezone.utc)
         else:
             cha_time_list = range_time()
-        date_from = cha_time_list[0]
-        date_to = cha_time_list[1]
-        #if not gameid:
+            date_from = cha_time_list[0]
+            date_to = cha_time_list[1]
         gameid = request.POST['gameid']
         if int(gameid) == 1:
             mon_data = rof_day_data.objects.filter(operationtime__range=(date_from, date_to))
+            rof_thid = rof_day_data.objects.filter(operationtime__range=(date_from, date_to)).aggregate(
+                Sum('dayrun'), Sum('newaddaccount'), Avg('payrate'), Avg('loginarpu'), Avg('payarpu'),
+                Sum('payrolenum'), Avg('tworemain'), Avg('threeremain'), Avg('sevenremain'), Avg('fourteenremain'),
+                Avg('monthremain'), Avg('twoLTV'), Avg('threeLTV'), Avg('sevenLTV'), Avg('fourteenLTV'),
+                Avg('monthLTV'))
         elif int(gameid) == 2 :
             mon_data = rofid_day_data.objects.filter(operationtime__range=(date_from, date_to))
+            rof_thid = rofid_day_data.objects.filter(operationtime__range=(date_from, date_to)).aggregate(
+                Sum('dayrun'), Sum('newaddaccount'), Avg('payrate'), Avg('loginarpu'), Avg('payarpu'),
+                Sum('payrolenum'), Avg('tworemain'), Avg('threeremain'), Avg('sevenremain'), Avg('fourteenremain'),
+                Avg('monthremain'), Avg('twoLTV'), Avg('threeLTV'), Avg('sevenLTV'), Avg('fourteenLTV'),
+                Avg('monthLTV'))
         elif int(gameid) == 3:
             mon_data = e3kid_day_data.objects.filter(operationtime__range=(date_from, date_to))
-            e3k_id = rof_day_data.objects.filter(operationtime__range=(date_from, date_to)).aggregate(
-                Sum('loginaccount'), Sum('dnu'), Sum('dayrun'), Avg('dnupay'), Sum('f_pay'),Sum('payrolenum'), Sum('f_paynum'), Avg('paynum'), Avg('arppu'), Avg('arpu'),Avg('AVEdnupay'),Avg('payrate'))
+            e3k_id = e3kid_day_data.objects.filter(operationtime__range=(date_from, date_to)).aggregate(
+                Sum('loginaccount'), Sum('dnu'), Sum('dayrun'), Sum('dnupay'), Sum('f_pay'), Sum('payrolenum'),
+                Sum('f_paynum'), Avg('paynum'), Avg('arppu'), Avg('arpu'), Avg('AVEdnupay'), Avg('payrate'))
+            tump = {}
+            tump['operationtime'] = '合计'
+            tump['channel'] = '-'
+            tump['dau'] = '-'
+            tump['loginaccount'] = e3k_id['loginaccount__sum']
+            tump['dnu'] = e3k_id['dnu__sum']
+            tump['dayrun'] = '%.2f' % float(e3k_id['dayrun__sum'])
+            tump['dnupay'] = '%.2f' % float(e3k_id['dnupay__sum'])
+            tump['f_pay'] = '%.2f' % float(e3k_id['f_pay__sum'])
+            tump['payrolenum'] = e3k_id['payrolenum__sum']
+            tump['dnupaynum'] = '-'
+            tump['f_paynum'] = '%.2f' % float(e3k_id['f_paynum__sum'])
+            tump['paynum'] = e3k_id['paynum__avg']
+            tump['dnupaycount'] = '-'
+            tump['arppu'] = '%.2f' % float(e3k_id['arppu__avg'])
+            tump['arpu'] = '%.2f' % float(e3k_id['arpu__avg'])
+            tump['AVEdnupay'] = '%.2f' % (float(e3k_id['AVEdnupay__avg']))
+            tump['payrate'] = str('%.2f' % (float(e3k_id['payrate__avg']) * 100)) + "%"
+            mydata.append(tump)
             for i in mon_data:
                 tump = {}
                 tump['operationtime'] = i.operationtime.strftime("%Y/%m/%d")
@@ -131,12 +135,12 @@ def game_data(request):
                 tump['dnupaycount'] = i.dnupaycount
                 tump['arppu'] = '%.2f' % float(i.arppu)
                 tump['arpu'] = '%.2f' % float(i.arpu)
-                tump['AVEdnupay'] = str('%.2f' % (float(i.AVEdnupay)*100)) + "%"
+                tump['AVEdnupay'] = '%.2f' % (float(i.AVEdnupay))
                 tump['payrate'] = str('%.2f' % (float(i.payrate)*100)) + "%"
                 mydata.append(tump)
-            return JsonResponse({'mydata': mydata,'e3k_id':e3k_id})
-        rof_thid = rof_day_data.objects.filter(operationtime__range=(date_from, date_to)).aggregate(
-            Sum('dayrun'), Sum('newaddaccount'), Avg('payrate'), Avg('loginarpu'), Avg('payarpu'),Sum('payrolenum'), Avg('tworemain'), Avg('threeremain'), Avg('sevenremain'), Avg('fourteenremain'),Avg('monthremain'),Avg('twoLTV'), Avg('threeLTV'), Avg('sevenLTV'), Avg('fourteenLTV'), Avg('monthLTV'))
+
+            return JsonResponse({'data': mydata})
+
         for i in mon_data:
             tump = {}
             tump['operationtime'] = i.operationtime.strftime("%Y/%m/%d")
@@ -159,5 +163,5 @@ def game_data(request):
             tump['fourteenLTV'] = '%.2f' % float(i.fourteenLTV)
             tump['monthLTV'] = '%.2f' % float(i.monthLTV)
             mydata.append(tump)
-        return JsonResponse({'data': mydata,'rof_thid':rof_thid})
+        return JsonResponse({'data': mydata})
 

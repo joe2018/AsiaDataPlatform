@@ -57,17 +57,11 @@ var pageData = {
     'index': function indexData() {
 		var myDate = new Date();
 		var Year = myDate.getFullYear();
-		var month = myDate.getMonth()+1; 
+		var month = myDate.getMonth()+1;
 		change_month(String(Year)+String(month))
         document.getElementById("change_time").value = String(Year)+'年'+String(month)+'日';
-        $('#change').on('change', function () {
-            month = $('#change').val();
-            change_month(month);
-        })
-        $('#5421').on('changed', function () {
-            month = $('#5421').val();
-            change_month(month);
-        })
+
+
         var myScroll = new IScroll('#wrapper', {
             scrollbars: true,
             mouseWheel: true,
@@ -180,8 +174,6 @@ var pageData = {
         // ==========================
 
         var echartsC = echarts.init(document.getElementById('tpl-echarts-C'));
-
-
         optionC = {
             tooltip: {
                 trigger: 'axis'
@@ -395,6 +387,22 @@ var pageData = {
         echartsA.setOption(option);
     },
     'game': function gameData() {
+        var myDate = new Date();
+		var Year = myDate.getFullYear();
+		var month = myDate.getMonth()+1;
+		var day = myDate.getDate();
+		month= month<10?"0"+month:month;
+		day= day<10?"0"+day:day;
+		document.getElementById("star_time").value = String(Year)+'-'+String(month)+'-01';
+		document.getElementById("end_time").value = String(Year)+'-'+String(month)+'-'+String(day);
+        $('#data_search').on('click',function () {
+            var star_time = $('#star_time').val();
+            var end_time = $('#end_time').val();
+            $('#test').html(star_time+end_time);
+            $.post("/game_data/",{'star_time':star_time,'end_time':end_time,'gameid':game_id},function () {
+                $('#example').DataTable().ajax.reload();
+            })
+        })
         if (game_id == 1 | game_id ==2){
             var columns= [
                     {data: 'operationtime'},
@@ -439,22 +447,21 @@ var pageData = {
                 ]
         }
         dt_rofth(game_id,columns)
-        $('#change').on('change', function () {
-            $('#example').DataTable().ajax.reload();
-        })
         function dt_rofth(game_id,columns) {
          var table = $('#example').DataTable({
                 "info": false,
                 "paging": true,
                 "processing": true,
-                "ordering":true,//thead上的排序按钮
-                "bLengthChange": false,//分页条数选择按钮
+                "ordering":false,//thead上的排序按钮
+                "bLengthChange": true,//分页条数选择按钮
                 "bProcessing": true,//显示加载中
-                "bInfo": false,//页脚信息显示
+                "bInfo": true,//页脚信息显示
                 "searching": false,//搜索输入框显示
                 "sPaginationType": "full_numbers",//分页显示样式
                 "scrollX": true,//左右滚动条
-                "iDisplayLength":-1,//每页显示数
+                "iDisplayLength":10,//每页显示数
+                "stripeClasses": [ 'strip1', 'strip2', 'strip3' ],//斑马线
+                "order": [ 0, 'desc' ],
                 "aLengthMenu" : [ [ 10, 25, -1 ], [ "10", "25", "所有" ] ],
                                      "oLanguage": {
                                     "sLengthMenu": "每页显示 _MENU_  条",
@@ -481,7 +488,7 @@ var pageData = {
                     type: 'post',
                     url: '/game_data/',
                     data: function (d) {
-                        d.cha_time = $('#change').val();
+                        d.cha_time = $('#change_time').val();
                         d.gameid =game_id
                     }
                 }
@@ -509,7 +516,19 @@ function getQueryString() {
 }
 
 function datechange() {
-    date_option = {isShowClear:false,readOnly:true,skin:'whyGreen',dateFmt:'yyyy年M月',minDate:'2018-1',maxDate:'%y-%M',onpicked:pickedFunc}
+    date_option = {isShowClear:false,readOnly:true,skin:'whyGreen',dateFmt:'yyyy年M月',minDate:'2018-1',maxDate:'%y-%M',position:{left:-50,top:-70},onpicked:pickedFunc}
+    WdatePicker(date_option)
+    return WdatePicker
+}
+
+function star_time() {
+    date_option = {isShowClear:false,readOnly:true,skin:'whyGreen',minDate:'2018-1-1',position:{left:-50,top:-70},maxDate:'%y-%M-%d',maxDate:'#F{$dp.$D(\'end_time\')}'}
+    WdatePicker(date_option)
+    return WdatePicker
+}
+
+function end_time() {
+    date_option = {isShowClear:false,readOnly:true,skin:'whyGreen',minDate:'2018-1-1',position:{left:-50,top:-70},maxDate:'%y-%M-%d',minDate:'#F{$dp.$D(\'star_time\')}'}
     WdatePicker(date_option)
     return WdatePicker
 }
@@ -530,4 +549,13 @@ function change_month(month){
         $('#ltv').html(ret.ltv );
         $('#nowmon').html(ret.mon+'月' );
     });
+}
+function ALERTCLACK(content) {
+    AMUI.dialog.alert({
+        title: '提示',
+        content: content,
+        onConfirm: function () {
+            console.log('close');
+        }
+       })
 }

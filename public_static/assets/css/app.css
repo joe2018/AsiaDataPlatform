@@ -157,7 +157,8 @@ ul.am-dropdown-content>li>a {
 }
 
 .div-float-right{
-	float: right;
+    float: right;
+    display: inline-block;
 	}
 .tpl-header-list-user-nick {
     color: #7FB0DA;
@@ -1153,13 +1154,17 @@ ul.tpl-dropdown-content li>a.tpl-dropdown-content-message:last-child {
 }
 
 .input-inline {
-    display: inline-block;
+    display: flex;
     width: auto;
     vertical-align: middle;
 }
 
 .input-small {
-    width: 145px!important;
+    width: 130px!important;
+}
+
+.input-big {
+    width: 350px!important;
 }
 
 .input-icon {
@@ -2053,23 +2058,6 @@ ul.tpl-dropdown-content li>a.tpl-dropdown-content-message:last-child {
         padding-left: 0;
     }
 }
-.div-table{
-    border: 1px solid #d4dce4;
-    padding: 12px 20px;
-    background-color: #fff;
-    margin-top: 0;
-    margin-bottom: 20px;
-    overflow: hidden;
-}
-.div-border {
-    border-top: 1px solid #e9ecf3;
-}
-
-.div-padding {
-    padding-top: 20px;
-    padding-bottom: 20px;
-}
-
 .search-control input[type="text"] {
     padding: 4px 8px!important;
     border-radius: 4px;
@@ -2086,5 +2074,8 @@ ul.tpl-dropdown-content li>a.tpl-dropdown-content-message:last-child {
     height: 30px!important;
     border: 1px solid #bfe0f3!important;
     background-color: #fff;
-    margin-right: 10px;
+    margin-right: 5px;
+    margin-left: 5px;
 }
+
+
