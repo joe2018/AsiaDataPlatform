@@ -21,9 +21,6 @@ def rofid_data(request):
     return render(request, 'game_data.html',{'game_id':2,'title': '梦幻之翼印尼','type':1})
 
 def e3kid_data(request):
-    chg = request.POST['star_time']
-    times = datetime.datetime.strptime(chg, "%Y-%m-%d")
-    print(times)
 
     return render(request, 'game_data.html',{'game_id':3,'title': '乱轰三国印尼','type':2})
 

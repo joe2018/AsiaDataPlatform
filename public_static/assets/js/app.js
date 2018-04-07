@@ -399,9 +399,7 @@ var pageData = {
             var star_time = $('#star_time').val();
             var end_time = $('#end_time').val();
             $('#test').html(star_time+end_time);
-            $.post("/game_data/",{'star_time':star_time,'end_time':end_time,'gameid':game_id},function () {
-                $('#example').DataTable().ajax.reload();
-            })
+            $('#example').DataTable().ajax.reload();
         })
         if (game_id == 1 | game_id ==2){
             var columns= [
@@ -488,7 +486,8 @@ var pageData = {
                     type: 'post',
                     url: '/game_data/',
                     data: function (d) {
-                        d.cha_time = $('#change_time').val();
+                        d.star_time = $('#star_time').val();
+                        d.end_time = $('#end_time').val();
                         d.gameid =game_id
                     }
                 }
