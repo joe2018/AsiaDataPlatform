@@ -46,26 +46,55 @@ def m_money(request):
             cha_time_list = range_time()
             date_from = cha_time_list[0]
             date_to = cha_time_list[1]
-        rofmoney_th = rof_day_data.objects.filter(operationtime__range=(date_from, date_to)).aggregate(Sum('dayrun'),Sum('newaddaccount'),Avg('payrate'))
-        rofmoney_id = rofid_day_data.objects.filter(operationtime__range=(date_from, date_to)).aggregate(Sum('dayrun'),Sum('newaddaccount'),Avg('payrate'))
-        e3kmoney_id = e3kid_day_data.objects.filter(operationtime__range=(date_from, date_to)).aggregate(Sum('dayrun'),Sum('dnu'),Avg('payrate'))
-        rof_th = rof_day_data.objects.aggregate(Sum('dayrun'),Sum('newaddaccount'))
-        rof_id = rofid_day_data.objects.aggregate(Sum('dayrun'), Sum('newaddaccount'))
-        e3k_id = e3kid_day_data.objects.aggregate(Sum('dayrun'), Sum('dnu'))
+        day = int(datetime.datetime.now().strftime("%d"))
+        Month = int(datetime.datetime.now().strftime("%m"))
+        rofmoney_th = rof_day_data.objects.filter(operationtime__range=(date_from, date_to)).aggregate(Sum('dayrun'),Sum('newaddaccount'),Avg('payrate'),Avg('payarpu'),Avg('loginarpu'),Sum('dnupay'))
+        rofmoney_id = rofid_day_data.objects.filter(operationtime__range=(date_from, date_to)).aggregate(Sum('dayrun'),Sum('newaddaccount'),Avg('payrate'),Avg('payarpu'),Avg('loginarpu'),Sum('dnupay'))
+        e3kmoney_id = e3kid_day_data.objects.filter(operationtime__range=(date_from, date_to)).aggregate(Sum('dayrun'),Sum('dnu'),Avg('payrate'),Avg('arppu'),Avg('arpu'),Sum('dnupay'))
         all_money = rofmoney_th['dayrun__sum']+rofmoney_id['dayrun__sum']+e3kmoney_id['dayrun__sum']
         all_dnu = rofmoney_th['newaddaccount__sum']+rofmoney_id['newaddaccount__sum']+e3kmoney_id['dnu__sum']
         Avg_payrate = (rofmoney_th['payrate__avg']+rofmoney_id['payrate__avg']+(e3kmoney_id['payrate__avg']*100))/3
         rate = (float(all_money)*0.7)/158980*100
-        #rate = float(all_money) / 158980 * 100
+        all_rate = float(all_money) / 158980 * 100
+        if int(chg[4:]) == Month:
+            est_rate = rate / (day - 1) * 30
+            est_all_rate = all_rate/(day-1)*30
+            est_money = all_money / (day - 1) * 30
+        else:
+            est_rate = rate
+            est_all_rate = all_rate
+            est_money = all_money
+        Avg_arppu = (rofmoney_th['payarpu__avg']+rofmoney_id['payarpu__avg']+(e3kmoney_id['arppu__avg']))/3
+        Avg_arpu = (rofmoney_th['loginarpu__avg']+rofmoney_id['loginarpu__avg']+(e3kmoney_id['arpu__avg']))/3
+        sum_dunpay = rofmoney_th['dnupay__sum'] + rofmoney_id['dnupay__sum'] + e3kmoney_id['dnupay__sum']
+        dunpay_rate = sum_dunpay/all_money*100
+        rof_th = rof_day_data.objects.aggregate(Sum('dayrun'),Sum('newaddaccount'))
+        rof_id = rofid_day_data.objects.aggregate(Sum('dayrun'), Sum('newaddaccount'))
+        e3k_id = e3kid_day_data.objects.aggregate(Sum('dayrun'), Sum('dnu'))
         a_money = rof_th['dayrun__sum'] + rof_id['dayrun__sum'] + e3k_id['dayrun__sum']
         a_dnu = rof_th['newaddaccount__sum'] + rof_id['newaddaccount__sum'] + e3k_id['dnu__sum']
         ltv = a_money/a_dnu
-        return JsonResponse({'all_money': '%.2f' % all_money,'all_dnu':all_dnu,'Avg_payrate': '%.2f' % Avg_payrate,'rate': '%.2f' % rate,'ltv': '%.2f' % ltv,'mon':int(date_to.strftime('%m'))} )
+        rofadn_th = rof_day_data.objects.filter(operationtime__range=(date_from, date_to),channel__iexact='Android').aggregate(Sum('newaddaccount'),Sum( 'dayrun'))
+        rofadn_id = rofid_day_data.objects.filter(operationtime__range=(date_from, date_to),channel__iexact='Android').aggregate(Sum('newaddaccount'), Sum(
+            'dayrun'))
+        rofios_th = rof_day_data.objects.filter(operationtime__range=(date_from, date_to),channel__iexact='iOS').aggregate(Sum('newaddaccount'),Sum( 'dayrun'))
+        rofios_id = rofid_day_data.objects.filter(operationtime__range=(date_from, date_to),channel__iexact='iOS').aggregate(Sum('newaddaccount'), Sum(
+            'dayrun'))
+        e3kadn_id = e3kid_day_data.objects.filter(operationtime__range=(date_from, date_to),channel__iexact='android').aggregate(Sum('dnu'),Sum('dayrun'))
+        e3kios_id = e3kid_day_data.objects.filter(operationtime__range=(date_from, date_to),channel__iexact='ios').aggregate(Sum('dnu'),Sum('dayrun'))
+        and_num = (rofadn_th['newaddaccount__sum']+rofadn_id['newaddaccount__sum']+(e3kadn_id['dnu__sum']))
+        print(rofadn_th['newaddaccount__sum'],rofadn_id['newaddaccount__sum'],(e3kadn_id['dnu__sum']))
+        ios_num = (rofios_th['newaddaccount__sum']+rofios_id['newaddaccount__sum']+(e3kios_id['dnu__sum']))
+        print(rofios_th['newaddaccount__sum'],rofios_id['newaddaccount__sum'],(e3kios_id['dnu__sum']))
+        and_money = (rofadn_th['dayrun__sum']+rofadn_id['dayrun__sum']+(e3kadn_id['dayrun__sum']))
+        ios_money = (rofios_th['dayrun__sum'] + rofios_id['dayrun__sum'] + (e3kios_id['dayrun__sum']))
+        and_ltv = and_money/and_num
+        ios_ltv = ios_money/ios_num
+        return JsonResponse({'ios_money':'%.2f' % ios_money,'and_money':'%.2f' % and_money,'ios_num':ios_num,'and_num':and_num,'ios_ltv':'%.2f' % ios_ltv,'and_ltv':'%.2f' % and_ltv,'dunpay_rate':'%.2f' % dunpay_rate,'Avg_arpu':'%.2f' % Avg_arpu,'Avg_arppu':'%.2f' % Avg_arppu,'est_all_rate':'%.2f' % est_all_rate,'est_money':'%.2f' % est_money,'est_rate':'%.2f' % est_rate,'all_rate':'%.2f' % all_rate,'all_money': '%.2f' % all_money,'all_dnu':all_dnu,'Avg_payrate': '%.2f' % Avg_payrate,'rate': '%.2f' % rate,'ltv': '%.2f' % ltv,'mon':int(date_to.strftime('%m'))} )
 
 
 def game_data(request):
     if request.method == 'POST':
-        print(request.POST)
         mydata =[]
         if 'star_time' and  'end_time' in request.POST:
             star_time = request.POST['star_time']

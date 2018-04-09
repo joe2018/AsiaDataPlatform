@@ -398,7 +398,6 @@ var pageData = {
         $('#data_search').on('click',function () {
             var star_time = $('#star_time').val();
             var end_time = $('#end_time').val();
-            $('#test').html(star_time+end_time);
             $('#example').DataTable().ajax.reload();
         })
         if (game_id == 1 | game_id ==2){
@@ -547,6 +546,19 @@ function change_month(month){
         $('#rate').html(ret.rate+'%' );
         $('#ltv').html(ret.ltv );
         $('#nowmon').html(ret.mon+'月' );
+        $('#est_money').html(ret.est_money);
+        $('#est_rate').html(ret.est_rate+'%' );
+        $('#all_rate').html(ret.all_rate+'%' );
+        $('#est_all_rate').html(ret.est_all_rate+'%' );
+        $('#dunpay_rate').html(ret.dunpay_rate+'%' );
+        $('#Avg_arpu').html(ret.Avg_arpu );
+        $('#Avg_arppu').html(ret.Avg_arppu);
+        $('#ios_ltv').html(ret.ios_ltv);
+        $('#and_ltv').html(ret.and_ltv);
+        $('#and_num').html(ret.and_num);
+        $('#ios_num').html(ret.ios_num);
+        $('#ios_money').html(ret.ios_money);
+        $('#and_money').html(ret.and_money);
     });
 }
 function ALERTCLACK(content) {
