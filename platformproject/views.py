@@ -83,9 +83,7 @@ def m_money(request):
         e3kadn_id = e3kid_day_data.objects.filter(operationtime__range=(date_from, date_to),channel__iexact='android').aggregate(Sum('dnu'),Sum('dayrun'))
         e3kios_id = e3kid_day_data.objects.filter(operationtime__range=(date_from, date_to),channel__iexact='ios').aggregate(Sum('dnu'),Sum('dayrun'))
         and_num = (rofadn_th['newaddaccount__sum']+rofadn_id['newaddaccount__sum']+(e3kadn_id['dnu__sum']))
-        print(rofadn_th['newaddaccount__sum'],rofadn_id['newaddaccount__sum'],(e3kadn_id['dnu__sum']))
         ios_num = (rofios_th['newaddaccount__sum']+rofios_id['newaddaccount__sum']+(e3kios_id['dnu__sum']))
-        print(rofios_th['newaddaccount__sum'],rofios_id['newaddaccount__sum'],(e3kios_id['dnu__sum']))
         and_money = (rofadn_th['dayrun__sum']+rofadn_id['dayrun__sum']+(e3kadn_id['dayrun__sum']))
         ios_money = (rofios_th['dayrun__sum'] + rofios_id['dayrun__sum'] + (e3kios_id['dayrun__sum']))
         and_ltv = and_money/and_num
@@ -164,9 +162,28 @@ def game_data(request):
                 tump['AVEdnupay'] = '%.2f' % (float(i.AVEdnupay))
                 tump['payrate'] = str('%.2f' % (float(i.payrate)*100)) + "%"
                 mydata.append(tump)
-
             return JsonResponse({'data': mydata})
-
+        tump = {}
+        tump['operationtime'] = '合计'
+        tump['channel'] = '-'
+        tump['newaddaccount'] = rof_thid['newaddaccount__sum']
+        tump['loginaccount'] = '-'
+        tump['dayrun'] = '%.2f' % float(rof_thid['dayrun__sum'])
+        tump['payrolenum'] = '%.2f' % float(rof_thid['payrolenum__sum'])
+        tump['payrate'] = str('%.2f' % (float(rof_thid['payrate__avg']))) + "%"
+        tump['loginarpu'] = '%.2f' % (float(rof_thid['loginarpu__avg']))
+        tump['payarpu'] = '%.2f' % (float(rof_thid['payarpu__avg']))
+        tump['tworemain'] = str('%.2f' % (float(rof_thid['tworemain__avg']))) + "%"
+        tump['threeremain'] = str('%.2f' % (float(rof_thid['threeremain__avg']))) + "%"
+        tump['sevenremain'] = str('%.2f' % (float(rof_thid['sevenremain__avg']))) + "%"
+        tump['fourteenremain'] = str('%.2f' % (float(rof_thid['fourteenremain__avg']))) + "%"
+        tump['monthremain'] = str('%.2f' % (float(rof_thid['monthremain__avg']))) + "%"
+        tump['twoLTV'] = '%.2f' % float(rof_thid['twoLTV__avg'])
+        tump['threeLTV'] = '%.2f' % float(rof_thid['threeLTV__avg'])
+        tump['sevenLTV'] = '%.2f' % float(rof_thid['sevenLTV__avg'])
+        tump['fourteenLTV'] = '%.2f' % float(rof_thid['fourteenLTV__avg'])
+        tump['monthLTV'] = '%.2f' % float(rof_thid['monthLTV__avg'])
+        mydata.append(tump)
         for i in mon_data:
             tump = {}
             tump['operationtime'] = i.operationtime.strftime("%Y/%m/%d")

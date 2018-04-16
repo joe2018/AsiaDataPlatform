@@ -3,98 +3,85 @@
 <body data-type="game">
 {% endblock %}
 {% block content %}
-    <script>
+  <script>
         var game_id = {{ game_id }};
-        </script>
-    <link rel="stylesheet" href="/static/assets/css/amazeui.page.css"/>
-    <link rel="stylesheet" href="/static/assets/css/amazeui.chosen.css"/>
-    <script src="/static/assets/js/amazeui.chosen.min.js"></script>
-    <script src="/static/assets/js/amazeui.page.js"></script>
-        <div class="tpl-content-wrapper">
-            <div class="tpl-content-page-title">
-                {{ title }}版本综合报表
-            </div>
-            <ol class="am-breadcrumb">
-                <li><a href="{% url 'index' %}" class="am-icon-home">概览</a></li>
-                <li class="am-active">{{ title }}综合报表</li>
-            </ol>
-            <div class="row">
-                <div class="am-u-md-12 am-u-sm-12 row-mb">
-                    <div class="tpl-portlet">
-                        <div class="tpl-portlet-title">
-                            <div class="tpl-caption font-green ">
-                                <i class="am-icon-bar-chart am-icon-fw"></i>
-                                <span >分渠道日报</span>
-                            </div>
-                            <div class="tpl-portlet-input">
-                                <div class="portlet-input input-big  ">
-                                    <div class="am-g search-control input-inline">
-                                        <input type="text" id="star_time" class="Wdate"  onclick="star_time()" />
-                                        <span>-</span>
-                                        <input type="text" id="end_time" class="Wdate"  onclick="end_time()" />
-                                        <button id = 'data_search' class="am-btn am-btn-primary am-btn-xs">
-                                            搜索
-                                            <i class="am-icon-search"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="am-g">
-                            <div class="am-u-sm-12">
-                                <tbody>
-                                    <table   class="am-table am-table-striped am-table-hover  table-main" id="example" >
-                                        <thead>
-                                        {% ifequal type 1 %}
-                                            <tr>
-                                                <th>日期</th>
-                                                <th>平台</th>
-                                                <th>新增</th>
-                                                <th>活跃</th>
-                                                <th>流水</th>
-                                                <th>付费人数</th>
-                                                <th>付费率</th>
-                                                <th>arpu</th>
-                                                <th>arppu</th>
-                                                <th>2留</th>
-                                                <th>3留</th>
-                                                <th>7留</th>
-                                                <th>14留</th>
-                                                <th>月留</th>
-                                                <th>LTV2</th>
-                                                <th>LTV3</th>
-                                                <th>LTV7</th>
-                                                <th>LTV14</th>
-                                                <th>LTV30</th>
-                                            </tr>
-                                        {% else %}
-                                            <tr>
-                                                <th>日期</th>
-                                                <th>平台</th>
-                                                <th>活跃</th>
-                                                <th>登入次数</th>
-                                                <th>新增用户</th>
-                                                <th>日流水</th>
-                                                <th>新玩家付费</th>
-                                                <th>首冲金额</th>
-                                                <th>付费人数</th>
-                                                <th>新玩家付费人数</th>
-                                                <th>首冲金额</th>
-                                                <th>充值次数</th>
-                                                <th>新用户充值次数</th>
-                                                <th>arppu</th>
-                                                <th>arpu</th>
-                                                <th>新用户平均付费</th>
-                                                <th>付费率</th>
-                                            </tr>
-                                        {% endifequal %}
-                                        </thead>
-                                    </table>
-                                </tbody>
+  </script>
+<link rel="stylesheet" href="/static/assets/css/amazeui.page.css" />
+<link rel="stylesheet" href="/static/assets/css/amazeui.chosen.css" />
+<script src="/static/assets/js/amazeui.chosen.min.js"></script>
+<script src="/static/assets/js/amazeui.page.js"></script>
+<div class="tpl-content-wrapper">
+    <div class="tpl-content-page-title">{{ title }}版本综合报表</div>
+    <ol class="am-breadcrumb">
+        <li>
+            <a href="{% url 'index' %}" class="am-icon-home">概览</a></li>
+        <li class="am-active">{{ title }}综合报表</li></ol>
+    <div class="row">
+        <div class="am-u-md-12 am-u-sm-12 row-mb">
+            <div class="tpl-portlet">
+                <div class="tpl-portlet-title">
+                    <div class="tpl-caption font-green ">
+                        <i class="am-icon-bar-chart am-icon-fw"></i>
+                        <span>分渠道日报</span></div>
+                    <div class="tpl-portlet-input">
+                        <div class="portlet-input input-big  ">
+                            <div class="am-g search-control input-inline">
+                                <input type="text" id="star_time" class="Wdate" onclick="star_time()" />
+                                <span>-</span>
+                                <input type="text" id="end_time" class="Wdate" onclick="end_time()" />
+                                <button id="data_search" class="am-btn am-btn-primary am-btn-xs">搜索
+                                    <i class="am-icon-search"></i></button>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="am-g">
+                    <div class="am-u-sm-12">
+                        <table class="am-table am-table-striped am-table-hover  table-main" id="example">
+                            <thead>{% ifequal type 1 %}
+                                <tr>
+                                    <th>日期</th>
+                                    <th>平台</th>
+                                    <th>新增</th>
+                                    <th>活跃</th>
+                                    <th>流水</th>
+                                    <th>付费人数</th>
+                                    <th>付费率</th>
+                                    <th>arpu</th>
+                                    <th>arppu</th>
+                                    <th>2留</th>
+                                    <th>3留</th>
+                                    <th>7留</th>
+                                    <th>14留</th>
+                                    <th>月留</th>
+                                    <th>LTV2</th>
+                                    <th>LTV3</th>
+                                    <th>LTV7</th>
+                                    <th>LTV14</th>
+                                    <th>LTV30</th></tr>{% else %}
+                                <tr>
+                                    <th>日期</th>
+                                    <th>平台</th>
+                                    <th>活跃</th>
+                                    <th>登入次数</th>
+                                    <th>新增用户</th>
+                                    <th>日流水</th>
+                                    <th>新玩家付费</th>
+                                    <th>首冲金额</th>
+                                    <th>付费人数</th>
+                                    <th>新玩家付费人数</th>
+                                    <th>首冲金额</th>
+                                    <th>充值次数</th>
+                                    <th>新用户充值次数</th>
+                                    <th>arppu</th>
+                                    <th>arpu</th>
+                                    <th>新用户平均付费</th>
+                                    <th>付费率</th></tr>{% endifequal %}</thead>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
+    </div>
+</div>
 {% endblock content %}

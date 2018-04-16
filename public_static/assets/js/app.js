@@ -1,12 +1,4 @@
 $(function() {
-
-        var dataType = $('body').attr('data-type');
-            for (key in pageData) {
-                if (key == dataType) {
-                    pageData[key]();
-                }
-            }
-
         var $fullText = $('.admin-fullText');
         $('#admin-fullscreen').on('click', function() {
             $.AMUI.fullscreen.toggle();
@@ -16,7 +8,12 @@ $(function() {
             $fullText.text($.AMUI.fullscreen.isFullscreen ? '退出全屏' : '开启全屏');
         });
 
-
+        var dataType = $('body').attr('data-type');
+            for (key in pageData) {
+                if (key == dataType) {
+                    pageData[key]();
+                }
+            }
 
 
         $('.tpl-switch').find('.tpl-switch-btn-view').on('click', function() {
@@ -55,12 +52,11 @@ var pageData = {
     // 首页
     // ===============================================
     'index': function indexData() {
-		var myDate = new Date();
-		var Year = myDate.getFullYear();
+        var myDate = new Date();
+        var Year = myDate.getFullYear();
 		var month = myDate.getMonth()+1;
-		change_month(String(Year)+String(month))
+		change_month(String(Year)+String(month));
         document.getElementById("change_time").value = String(Year)+'年'+String(month)+'日';
-
 
         var myScroll = new IScroll('#wrapper', {
             scrollbars: true,
@@ -88,6 +84,7 @@ var pageData = {
             preventDefault: false,
             fadeScrollbars: true
         });
+
 
 
 		
