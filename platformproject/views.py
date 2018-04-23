@@ -64,8 +64,8 @@ def m_money(request):
             est_rate = rate
             est_all_rate = all_rate
             est_money = all_money
-        Avg_arppu = (rofmoney_th['payarpu__avg']+rofmoney_id['payarpu__avg']+(e3kmoney_id['arppu__avg']))/3
-        Avg_arpu = (rofmoney_th['loginarpu__avg']+rofmoney_id['loginarpu__avg']+(e3kmoney_id['arpu__avg']))/3
+        Avg_arppu = (rofmoney_th['payarpu__avg']+rofmoney_id['payarpu__avg']+e3kmoney_id['arppu__avg'])/3
+        Avg_arpu = (rofmoney_th['loginarpu__avg']+rofmoney_id['loginarpu__avg']+e3kmoney_id['arpu__avg'])/3
         sum_dunpay = rofmoney_th['dnupay__sum'] + rofmoney_id['dnupay__sum'] + e3kmoney_id['dnupay__sum']
         dunpay_rate = sum_dunpay/all_money*100
         rof_th = rof_day_data.objects.aggregate(Sum('dayrun'),Sum('newaddaccount'))
@@ -88,7 +88,19 @@ def m_money(request):
         ios_money = (rofios_th['dayrun__sum'] + rofios_id['dayrun__sum'] + (e3kios_id['dayrun__sum']))
         and_ltv = and_money/and_num
         ios_ltv = ios_money/ios_num
-        return JsonResponse({'ios_money':'%.2f' % ios_money,'and_money':'%.2f' % and_money,'ios_num':ios_num,'and_num':and_num,'ios_ltv':'%.2f' % ios_ltv,'and_ltv':'%.2f' % and_ltv,'dunpay_rate':'%.2f' % dunpay_rate,'Avg_arpu':'%.2f' % Avg_arpu,'Avg_arppu':'%.2f' % Avg_arppu,'est_all_rate':'%.2f' % est_all_rate,'est_money':'%.2f' % est_money,'est_rate':'%.2f' % est_rate,'all_rate':'%.2f' % all_rate,'all_money': '%.2f' % all_money,'all_dnu':all_dnu,'Avg_payrate': '%.2f' % Avg_payrate,'rate': '%.2f' % rate,'ltv': '%.2f' % ltv,'mon':int(date_to.strftime('%m'))} )
+        return JsonResponse({'rof_arpu_th':'%.2f' % rofmoney_th['loginarpu__avg'],'rof_arpu_id':'%.2f' % rofmoney_id['loginarpu__avg'],'e3k_arpu_id':'%.2f' % e3kmoney_id['arpu__avg'], \
+            'rof_arppu_th':'%.2f' % rofmoney_th['payarpu__avg'],'rof_arppu_id':'%.2f' % rofmoney_id['payarpu__avg'],'e3k_arppu_id':'%.2f' % e3kmoney_id['arppu__avg'], \
+            'rof_payrate_th':'%.2f' % rofmoney_th['payrate__avg'],'rof_payrate_id':'%.2f' % rofmoney_id['payrate__avg'],'e3k_payrate_id':'%.2f' % (e3kmoney_id['payrate__avg']*100), \
+            'rofios_money_th':'%.2f' % rofios_th['dayrun__sum'],'rofios_money_id':'%.2f' % rofios_id['dayrun__sum'],'e3kios_money_id':'%.2f' % e3kios_id['dayrun__sum'], \
+            'rofadn_money_th':'%.2f' % rofadn_th['dayrun__sum'],'rofadn_money_id':'%.2f' % rofadn_id['dayrun__sum'],'e3kadn_money_id':'%.2f' % e3kadn_id['dayrun__sum'], \
+            'rofios_th':rofios_th['newaddaccount__sum'],'rofios_id':rofios_id['newaddaccount__sum'],'e3kios_id':e3kios_id['dnu__sum'], \
+            'rofadn_th':rofadn_th['newaddaccount__sum'],'rofadn_id':rofadn_id['newaddaccount__sum'],'e3kadn_id':e3kadn_id['dnu__sum'], \
+            'rofmoney_th':'%.2f' % rofmoney_th['dayrun__sum'],'rofmoney_id':'%.2f' % rofmoney_id['dayrun__sum'], \
+            'e3kmoney_id':'%.2f' % e3kmoney_id['dayrun__sum'],'ios_money':'%.2f' % ios_money,'and_money':'%.2f' % and_money, \
+            'ios_num':ios_num,'and_num':and_num,'ios_ltv':'%.2f' % ios_ltv,'and_ltv':'%.2f' % and_ltv,'dunpay_rate':'%.2f' % dunpay_rate, \
+            'Avg_arpu':'%.2f' % Avg_arpu,'Avg_arppu':'%.2f' % Avg_arppu,'est_all_rate':'%.2f' % est_all_rate,'est_money':'%.2f' % est_money, \
+            'est_rate':'%.2f' % est_rate,'all_rate':'%.2f' % all_rate,'all_money': '%.2f' % all_money,'all_dnu':all_dnu, \
+            'Avg_payrate': '%.2f' % Avg_payrate,'rate': '%.2f' % rate,'ltv': '%.2f' % ltv,'mon':int(date_to.strftime('%m'))} )
 
 
 def game_data(request):
@@ -135,7 +147,7 @@ def game_data(request):
             tump['payrolenum'] = e3k_id['payrolenum__sum']
             tump['dnupaynum'] = '-'
             tump['f_paynum'] = '%.2f' % float(e3k_id['f_paynum__sum'])
-            tump['paynum'] = e3k_id['paynum__avg']
+            tump['paynum'] = int(e3k_id['paynum__avg'])
             tump['dnupaycount'] = '-'
             tump['arppu'] = '%.2f' % float(e3k_id['arppu__avg'])
             tump['arpu'] = '%.2f' % float(e3k_id['arpu__avg'])
