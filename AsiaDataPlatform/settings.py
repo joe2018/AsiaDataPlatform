@@ -81,7 +81,7 @@ DATABASES = {
         'ENGINE':'django.db.backends.mysql',
         'NAME':'asiadata',
         'USER':'root',
-        'PASSWORD':'a1781127309',
+        'PASSWORD':'a56923391a',
         'HOST':'127.0.0.1',
         'PORT':'3306',
     }

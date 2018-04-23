@@ -152,7 +152,7 @@ def game_data(request):
                 tump['dayrun'] = '%.2f' % float(i.dayrun)
                 tump['dnupay'] = '%.2f' % float(i.dnupay)
                 tump['f_pay'] = '%.2f' % float(i.f_pay)
-                tump['payrolenum'] = i.payrolenum
+                tump['payrolenum'] = int(i.payrolenum)
                 tump['dnupaynum'] = i.dnupaynum
                 tump['f_paynum'] =  '%.2f' % float(i.f_paynum)
                 tump['paynum'] = i.paynum
