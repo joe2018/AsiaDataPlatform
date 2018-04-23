@@ -556,6 +556,35 @@ function change_month(month){
         $('#ios_num').html(ret.ios_num);
         $('#ios_money').html(ret.ios_money);
         $('#and_money').html(ret.and_money);
+        $('#rofmoney_th').html('$'+ret.rofmoney_th);
+        $('#rofmoney_id').html('$'+ret.rofmoney_id);
+        $('#e3kmoney_id').html('$'+ret.e3kmoney_id);
+        $('#rofadn_th').html(ret.rofadn_th);
+        $('#rofadn_id').html(ret.rofadn_id);
+        $('#e3kadn_id').html(ret.e3kadn_id);
+        $('#rofios_th').html(ret.rofios_th);
+        $('#rofios_id').html(ret.rofios_id);
+        $('#e3kios_id').html(ret.e3kios_id);
+
+        $('#rofadn_money_th').html('$'+ret.rofadn_money_th);
+        $('#rofadn_money_id').html('$'+ret.rofadn_money_id);
+        $('#e3kadn_money_id').html('$'+ret.e3kadn_money_id);
+
+        $('#rofios_money_th').html('$'+ret.rofios_money_th);
+        $('#rofios_money_id').html('$'+ret.rofios_money_id);
+        $('#e3kios_money_id').html('$'+ret.e3kios_money_id);
+
+        $('#rof_payrate_th').html(ret.rof_payrate_th+'%');
+        $('#rof_payrate_id').html(ret.rof_payrate_id+'%');
+        $('#e3k_payrate_id').html(ret.e3k_payrate_id+'%');
+
+        $('#rof_arppu_th').html('$'+ret.rof_arppu_th);
+        $('#rof_arppu_id').html('$'+ret.rof_arppu_id);
+        $('#e3k_arppu_id').html('$'+ret.e3k_arppu_id);
+
+        $('#rof_arpu_th').html('$'+ret.rof_arpu_th);
+        $('#rof_arpu_id').html('$'+ret.rof_arpu_id);
+        $('#e3k_arpu_id').html('$'+ret.e3k_arpu_id);
     });
 }
 function ALERTCLACK(content) {
