@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http import JsonResponse
 from django.db.models import Sum,Avg, Max, Min, Count
 from django.http import HttpResponse
@@ -6,23 +6,67 @@ from .models import *
 import datetime,time
 from django.utils import timezone
 from calendar import monthrange #获取月份的天数
+import hashlib
 
 # Create your views here.
+def auth(func):
+	def inner(request, *args, **kwargs):
+		username = request.session.get("username", "")
+		if not username:
+			return redirect('/login')
+		return func(request, *args, **kwargs)
+	return inner
 
+@auth
 def index(request):
-    return render(request, 'index.html')
+    username = request.session.get("username", "")
+    return render(request, 'index.html',{"current_user":username})
 
+#密码处理
+def hash(value,code):
+    hash = hashlib.md5(code.encode('utf-8'))
+    hash.update(value.encode('utf-8'))
+    _password_ = hash.hexdigest()
+    return _password_
+
+def login(request):
+    massage = ''
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        if username and password:
+            print(username,password)
+            user_name = user.objects.filter(user_name__iexact=username)
+            if user_name:
+                print(user_name[0].user_key)
+                _password = hash(password,user_name[0].user_key)
+                print(_password)
+                if _password == user_name[0].user_hashpas:
+                    request.session["username"] = username
+                    request.session.set_expiry(3600)
+                    return redirect('index')
+                else:
+                    massage = '用户名或密码错误'
+            else:
+                massage = '用户名或密码错误'
+        else:
+            massage = '请输入用户名密码'
+    return render(request, 'login.html',{'massage':massage})
+
+@auth
 def rofth_data(request):
+    username = request.session.get("username", "")
+    return render(request, 'game_data.html',{'game_id':1,'title': '梦幻之翼泰国','type':1,"current_user":username})
 
-    return render(request, 'game_data.html',{'game_id':1,'title': '梦幻之翼泰国','type':1})
-
+@auth
 def rofid_data(request):
+    username = request.session.get("username", "")
+    return render(request, 'game_data.html',{'game_id':2,'title': '梦幻之翼印尼','type':1,"current_user":username})
 
-    return render(request, 'game_data.html',{'game_id':2,'title': '梦幻之翼印尼','type':1})
-
+@auth
 def e3kid_data(request):
-
-    return render(request, 'game_data.html',{'game_id':3,'title': '乱轰三国印尼','type':2})
+    username = request.session.get("username", "")
+    return render(request, 'game_data.html',{'game_id':3,'title': '乱轰三国印尼','type':2,"current_user":username})
 
 def range_time(*args):
     cha_time_list = []
@@ -220,3 +264,6 @@ def game_data(request):
             mydata.append(tump)
         return JsonResponse({'data': mydata})
 
+def del_user(request):
+	del request.session['username']
+	return redirect('/login')

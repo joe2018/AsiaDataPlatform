@@ -26,4 +26,6 @@ urlpatterns = [
     path('e3kid_data/', views.e3kid_data, name='e3kid_data'),
     path('game_data/', views.game_data, name='game_data'),
     path('favicon.ico',RedirectView.as_view(url=r'static/favicon.ico')),
+    path('login/', views.login,name = 'login'),
+    path('del_user/', views.del_user, name='del_user'),
 ]
